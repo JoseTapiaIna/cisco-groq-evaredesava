@@ -1,0 +1,54 @@
+```
+enable
+configure terminal
+!
+! Calculamos la máscara de subred necesaria para 10 subredes
+! 2^3 = 8, 2^4 = 16, necesitamos 4 bits para 10 subredes
+! La máscara de subred original es /24, necesitamos "prestar" 1 bit
+! Nueva máscara de subred: /25
+!
+ip subnet-zero
+!
+! Configuración de la primera interfaz
+interface FastEthernet0/0
+ ip address 172.16.10.1 255.255.255.128
+!
+! Configuración de la segunda interfaz
+interface FastEthernet0/1
+ ip address 172.16.10.129 255.255.255.128
+!
+! Configuración de la tercera interfaz
+interface FastEthernet0/2
+ ip address 172.16.10.257 255.255.255.128
+!
+! Configuración de la cuarta interfaz
+interface FastEthernet0/3
+ ip address 172.16.11.1 255.255.255.128
+!
+! Configuración de la quinta interfaz
+interface FastEthernet0/4
+ ip address 172.16.11.129 255.255.255.128
+!
+! Configuración de la sexta interfaz
+interface FastEthernet0/5
+ ip address 172.16.11.257 255.255.255.128
+!
+! Configuración de la séptima interfaz
+interface FastEthernet0/6
+ ip address 172.16.12.1 255.255.255.128
+!
+! Configuración de la octava interfaz
+interface FastEthernet0/7
+ ip address 172.16.12.129 255.255.255.128
+!
+! Configuración de la novena interfaz
+interface FastEthernet0/8
+ ip address 172.16.12.257 255.255.255.128
+!
+! Configuración de la décima interfaz
+interface FastEthernet0/9
+ ip address 172.16.13.1 255.255.255.128
+!
+end
+write memory
+```

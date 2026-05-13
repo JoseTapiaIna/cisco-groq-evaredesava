@@ -1,0 +1,13 @@
+```
+vlan 69
+ name EscA
+ exit
+!
+interface range g0/0-0
+ switchport mode access
+ switchport access vlan 69
+!
+interface g0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 69
+```

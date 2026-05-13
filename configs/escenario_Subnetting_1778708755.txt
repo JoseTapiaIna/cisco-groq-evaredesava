@@ -1,0 +1,18 @@
+```
+enable
+configure terminal
+!
+! Subnetting de 172.16.10.0/24 en 2 subredes
+! 2^(32-24-1) = 2^7 = 128 subredes posibles
+! 2^(32-25) = 2^7 = 128 host por subred
+!
+! Subred 1: 172.16.10.0/25
+! Subred 2: 172.16.10.128/25
+!
+interface FastEthernet0/0
+ ip address 172.16.10.1 255.255.255.128
+!
+interface FastEthernet0/1
+ ip address 172.16.10.129 255.255.255.128
+end
+```
