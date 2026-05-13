@@ -1,4 +1,4 @@
-# cisco-groq-evaredesava
+# eval-cisco-groq-tapia-cortes
 
 **Generador de Configuraciones Cisco IOS con Inteligencia Artificial (Groq)**
 
@@ -17,48 +17,49 @@ Esta herramienta de consola en Python automatiza la creación de configuraciones
 
 Para garantizar la fiabilidad necesaria en configuraciones de infraestructura de red, se han aplicado los siguientes parámetros técnicos conforme a la pauta:
 
-1.  **Temperature (0.2)**: Se seleccionó un valor bajo para asegurar que la respuesta sea determinista y precisa. Esto minimiza la "creatividad" de la IA y garantiza que la sintaxis de los comandos sea estrictamente la estándar de Cisco.
-2.  **Max_tokens (800)**: Este límite permite generar configuraciones extensas (como múltiples VLANs o procesos OSPF complejos) sin que la respuesta se vea truncada.
-3.  **Stream (True)**: Requerimiento técnico obligatorio implementado para mejorar la experiencia de usuario, permitiendo visualizar la generación de la configuración en tiempo real en la consola.
+1.  **Temperature (0.2)**: Se seleccionó un valor bajo para asegurar que la respuesta sea determinista y precisa. Esto garantiza que el modelo proporcione comandos estándar y funcionales, evitando "alucinaciones" en la sintaxis.
+2.  **Max_tokens (800)**: Este límite asegura que se puedan generar configuraciones completas para escenarios complejos sin que el texto se corte prematuramente.
+3.  **Stream (True)**: Requerimiento técnico obligatorio para visualizar la generación de comandos en tiempo real, mejorando la interacción en la consola.
 
 ---
 
-## 🛠️ Escenarios Soportados (Mínimo Obligatorio)
+## 🛠️ Escenarios Soportados y Ejemplos de Uso
 
-El sistema está validado para generar configuraciones en tres áreas críticas de la pauta:
+El sistema está validado para los tres escenarios obligatorios:
 
-* **Escenario A: VLANs y Trunking**: Configuración de IDs de VLAN, nombres, asignación de puertos de acceso y configuración de enlaces troncales.
-* **Escenario B: OSPF**: Configuración de procesos OSPF, declaración de redes, wildcards y asignación de áreas.
-* **Escenario C: Subnetting e IPs**: Cálculo de subredes a partir de una red base y asignación de direcciones IP a interfaces.
+### Escenario A: VLANs y Trunking
+* **Entrada**: ID de VLAN (ej. 10), Nombre (ej. Ventas), Puertos (ej. fa0/1-5).
+* **Resultado**: Genera la creación de la VLAN y la asignación de interfaces en modo acceso y troncal.
+
+### Escenario B: OSPF
+* **Entrada**: ID de proceso (ej. 1), Red y Wildcard (ej. 192.168.1.0 0.0.0.255), Área (ej. 0).
+* **Resultado**: Genera el bloque `router ospf` con sus respectivas sentencias `network`.
+
+### Escenario C: Subnetting e IPs
+* **Entrada**: Red base con prefijo (ej. 172.16.0.0/16), Cantidad de subredes.
+* **Resultado**: Realiza el cálculo de las subredes y genera los comandos `ip address` para las interfaces correspondientes.
 
 ---
 
-## 🚀 Instalación y Uso
+## 🚀 Instalación y Configuración
 
-### Requisitos Previos
-* Python 3.10 o superior.
-* Una API Key válida de [Groq Cloud](https://console.groq.com/).
+### Requisitos
+* Python 3.10+
+* API Key de [Groq Cloud](https://console.groq.com/).
 
-### Configuración
-1.  **Clonar el repositorio**:
+### Pasos
+1.  **Clonar y preparar**:
     ```bash
     git clone [https://github.com/JoseTapia/cisco-groq-evaredesava.git](https://github.com/JoseTapia/cisco-groq-evaredesava.git)
     cd cisco-groq-evaredesava
-    ```
-2.  **Crear y activar entorno virtual**:
-    ```bash
     python -m venv .venv
-    # En Windows:
-    .\.venv\Scripts\activate
-    ```
-3.  **Instalar dependencias**:
-    ```bash
+    # Activar: .\.venv\Scripts\activate (Windows)
     pip install -r requirements.txt
     ```
-4.  **Variables de Entorno**:
-    Cree un archivo `.env` en la raíz (use `.env.example` como referencia) y añada su llave:
+2.  **Variables de Entorno**:
+    Cree un archivo `.env` basado en `.env.example`:
     ```env
-    GROQ_API_KEY=tu_clave_aqui
+    GROQ_API_KEY=tu_clave_real_aqui
     ```
 
 ### Ejecución
