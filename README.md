@@ -1,67 +1,92 @@
-# eval-cisco-groq-tapia-cortes
+# Cisco Config Generator (IA)
 
-**Generador de Configuraciones Cisco IOS con Inteligencia Artificial (Groq)**
+Este proyecto es un asistente inteligente basado en Inteligencia Artificial para la generación de configuraciones de red **Cisco IOS**. Utiliza el modelo **Llama-3.3-70b** a través de la API de **Groq** para automatizar tareas de administración de redes de forma rápida y precisa.
 
-Esta herramienta de consola en Python automatiza la creación de configuraciones para dispositivos Cisco (Routers y Switches). Utiliza el modelo de lenguaje **Llama-3.3-70b-versatile** a través de la API de Groq para transformar requerimientos técnicos en comandos precisos de Cisco IOS, listos para ser aplicados en entornos de red.
-
----
-
-## 👥 Integrantes y Roles
+# 👥 Integrantes y Roles
 
 * **José Tapia**: Líder de Proyecto. Responsable de la creación del repositorio base, estructuración de directorios y codificación de la arquitectura inicial del programa.
 * **Martín Cortés**: Desarrollador Principal. Responsable del ajuste y optimización del código para el cumplimiento del 100% de los requerimientos técnicos, implementación de validaciones de red, generación de evidencias en `/configs` y redacción de la documentación técnica final.
+---
+
+## 📋 Escenarios Implementados
+
+El programa permite generar configuraciones para los siguientes casos de uso, garantizando sintaxis válida para equipos Cisco:
+
+1.  **Escenario A: VLANs y Trunking:** Configuración de IDs, nombres, puertos de acceso y enlaces troncales (802.1Q).
+2.  **Escenario B: OSPF:** Configuración de enrutamiento dinámico, IDs de proceso, redes, wildcards y áreas.
+3.  **Escenario C: Subnetting e IPs:** Cálculo y asignación de direccionamiento IP basado en una red raíz y cantidad de subredes.
+4.  **Escenario D: EtherChannel (Bonificación):** Agregación de enlaces mediante protocolos LACP, PAgP o modo manual, incluyendo la configuración de la interfaz lógica Port-channel.
 
 ---
 
-## ⚙️ Justificación de Parámetros del Modelo
+## 🛠️ Justificación Técnica de Parámetros (Eje 1.4)
 
-Para garantizar la fiabilidad necesaria en configuraciones de infraestructura de red, se han aplicado los siguientes parámetros técnicos conforme a la pauta:
+Para asegurar la fiabilidad de las configuraciones y evitar errores en entornos de producción, se configuraron los siguientes parámetros:
 
-1.  **Temperature (0.2)**: Se seleccionó un valor bajo para asegurar que la respuesta sea determinista y precisa. Esto garantiza que el modelo proporcione comandos estándar y funcionales, evitando "alucinaciones" en la sintaxis.
-2.  **Max_tokens (800)**: Este límite asegura que se puedan generar configuraciones completas para escenarios complejos sin que el texto se corte prematuramente.
-3.  **Stream (True)**: Requerimiento técnico obligatorio para visualizar la generación de comandos en tiempo real, mejorando la interacción en la consola.
+| Parámetro | Valor | Justificación |
+| :--- | :--- | :--- |
+| **Modelo** | `llama-3.3-70b-versatile` | Elegido por su alta capacidad de razonamiento lógico y precisión en sintaxis de programación y CLI. |
+| **Temperature** | `0.2` | Un valor bajo que garantiza respuestas deterministas y técnicas, minimizando la creatividad del modelo para evitar comandos inexistentes. |
+| **Max Tokens** | `800` | Extensión ideal para bloques de configuración completos sin riesgo de truncado de datos. |
+| **System Prompt** | Restrictivo | Configurado para que el modelo actúe estrictamente como un experto CCNA/CCNP, entregando solo comandos sin explicaciones innecesarias. |
 
 ---
 
-## 🛠️ Escenarios Soportados y Ejemplos de Uso
+## 🔐 Seguridad y Calidad Técnica (Eje 2)
 
-El sistema está validado para los tres escenarios obligatorios:
-
-### Escenario A: VLANs y Trunking
-* **Entrada**: ID de VLAN (ej. 10), Nombre (ej. Ventas), Puertos (ej. fa0/1-5).
-* **Resultado**: Genera la creación de la VLAN y la asignación de interfaces en modo acceso y troncal.
-
-### Escenario B: OSPF
-* **Entrada**: ID de proceso (ej. 1), Red y Wildcard (ej. 192.168.1.0 0.0.0.255), Área (ej. 0).
-* **Resultado**: Genera el bloque `router ospf` con sus respectivas sentencias `network`.
-
-### Escenario C: Subnetting e IPs
-* **Entrada**: Red base con prefijo (ej. 172.16.0.0/16), Cantidad de subredes.
-* **Resultado**: Realiza el cálculo de las subredes y genera los comandos `ip address` para las interfaces correspondientes.
+* **Gestión de Credenciales:** Uso de `python-dotenv` para evitar la exposición de la API Key. El archivo `.env` está protegido mediante `.gitignore`.
+* **Validación Local:** Antes de realizar peticiones a la API, el script valida localmente parámetros como:
+    * IDs de VLAN (1-4094).
+    * Prefijos de red (8-30).
+    * IDs de Channel-group (1-255).
+* **Manejo de Errores:** Implementación de bloques `try/except` para capturar fallos de conexión, API keys faltantes o límites de tasa (Rate Limit 429).
+* **Persistencia:** Todas las configuraciones generadas se almacenan automáticamente en la carpeta `/configs/` con marca de tiempo para auditoría.
 
 ---
 
 ## 🚀 Instalación y Configuración
 
-### Requisitos
-* Python 3.10+
-* API Key de [Groq Cloud](https://console.groq.com/).
+Siga estos pasos para desplegar el proyecto localmente:
 
-### Pasos
-1.  **Clonar y preparar**:
-    ```bash
-    git clone [https://github.com/JoseTapia/cisco-groq-evaredesava.git](https://github.com/JoseTapia/cisco-groq-evaredesava.git)
-    cd cisco-groq-evaredesava
-    python -m venv .venv
-    # Activar: .\.venv\Scripts\activate (Windows)
-    pip install -r requirements.txt
-    ```
-2.  **Variables de Entorno**:
-    Cree un archivo `.env` basado en `.env.example`:
-    ```env
-    GROQ_API_KEY=tu_clave_real_aqui
-    ```
+1. **Clonar el repositorio:**
+   ```bash
+   git clone [URL-DE-TU-REPOSITORIO]
+Crear y activar entorno virtual:
 
-### Ejecución
-```bash
+Bash
+python -m venv .venv
+# Windows:
+.venv\Scripts\activate
+Instalar dependencias:
+
+Bash
+pip install -r requirements.txt
+Configurar variables de entorno:
+Cree un archivo .env en la raíz y añada su API Key:
+
+Fragmento de código
+GROQ_API_KEY=tu_clave_de_groq_aqui
+Ejecutar el programa:
+
+Bash
 python cisco_config_gen.py
+
+📂 Estructura del Repositorio (Eje 3.2)
+cisco_config_gen.py: Código fuente principal.
+
+configs/: Repositorio local de configuraciones generadas (evidencia).
+
+.env.example: Guía para la configuración de variables de entorno.
+
+requirements.txt: Lista de librerías necesarias.
+
+.gitignore: Filtro de seguridad para archivos sensibles y temporales.
+
+© 2026 - Proyecto de Evaluación para Ingeniería en Telecomunicaciones.
+
+
+
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone [URL-DE-TU-REPOSITORIO]
