@@ -1,0 +1,13 @@
+! Escenario: EtherChannel
+! Fecha: 20260513-191034
+
+```
+interface GigabitEthernet0/4
+ channel-group 169 mode active
+exit
+
+interface Port-channel169
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+exit
+```
