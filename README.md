@@ -2,10 +2,11 @@
 
 Este proyecto es un asistente inteligente basado en Inteligencia Artificial para la generación de configuraciones de red **Cisco IOS**. Utiliza el modelo **Llama-3.3-70b** a través de la API de **Groq** para automatizar tareas de administración de redes de forma rápida y precisa.
 
-# 👥 Integrantes y Roles
+## 👥 Integrantes y Roles
 
 * **José Tapia**: Líder de Proyecto. Responsable de la creación del repositorio base, estructuración de directorios y codificación de la arquitectura inicial del programa.
-* **Martín Cortés**: Desarrollador Principal. Responsable del ajuste y optimización del código para el cumplimiento del 100% de los requerimientos técnicos, implementación de validaciones de red, generación de evidencias en `/configs` y redacción de la documentación técnica final.
+* **Martín Cortés**: Desarrollador Principal. Responsable del ajuste y optimización del código para el cumplimiento del 100% de los requerimientos técnicos, implementación de validaciones de red, generación de evidencias en `/configs` y redacción de la documentación técnica final.s
+
 ---
 
 ## 📋 Escenarios Implementados
@@ -44,49 +45,59 @@ Para asegurar la fiabilidad de las configuraciones y evitar errores en entornos 
 
 ---
 
+
+Vale, aquí tienes el bloque completo y ordenado, listo para que lo copies y pegues de una sola vez en tu `README.md`.
+
+```markdown
 ## 🚀 Instalación y Configuración
 
-Siga estos pasos para desplegar el proyecto localmente:
-
-1. **Clonar el repositorio:**
+1. **Crear y activar entorno virtual:**
    ```bash
-   git clone [URL-DE-TU-REPOSITORIO]
-Crear y activar entorno virtual:
+   python -m venv .venv
+   # Windows:
+   .venv\Scripts\activate
 
-Bash
-python -m venv .venv
-# Windows:
-.venv\Scripts\activate
-Instalar dependencias:
+```
 
-Bash
+2. **Instalar dependencias:**
+```bash
 pip install -r requirements.txt
-Configurar variables de entorno:
-Cree un archivo .env en la raíz y añada su API Key:
 
-Fragmento de código
+```
+
+
+3. **Configurar variables de entorno:**
+Cree un archivo `.env` en la raíz y añada su API Key:
+```env
 GROQ_API_KEY=tu_clave_de_groq_aqui
-Ejecutar el programa:
 
-Bash
+```
+
+
+4. **Ejecutar el programa:**
+```bash
 python cisco_config_gen.py
 
-📂 Estructura del Repositorio (Eje 3.2)
-cisco_config_gen.py: Código fuente principal.
-
-configs/: Repositorio local de configuraciones generadas (evidencia).
-
-.env.example: Guía para la configuración de variables de entorno.
-
-requirements.txt: Lista de librerías necesarias.
-
-.gitignore: Filtro de seguridad para archivos sensibles y temporales.
-
-© 2026 - Proyecto de Evaluación para Ingeniería en Telecomunicaciones.
+```
 
 
 
+---
 
-1. **Clonar el repositorio:**
-   ```bash
-   git clone [URL-DE-TU-REPOSITORIO]
+## 📂 Estructura del Repositorio (Eje 3.2)
+
+* **`cisco_config_gen.py`**: Código fuente principal.
+* **`configs/`**: Repositorio local de configuraciones generadas (evidencia).
+* **`.env.example`**: Guía para la configuración de variables de entorno.
+* **`requirements.txt`**: Lista de librerías necesarias.
+* **`.gitignore`**: Filtro de seguridad para archivos sensibles y temporales.
+
+---
+
+**© 2026 - Proyecto de Evaluación para Ingeniería en Telecomunicaciones.**
+
+```
+
+```
+
+   
